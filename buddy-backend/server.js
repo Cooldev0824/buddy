@@ -3,7 +3,18 @@ const cors = require("cors"); // Import CORS
 const app = express();
 const PORT = process.env.PORT || 3000;
 const axios = require("axios");
+const winston = require('winston');
 
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'server.log' })
+  ]
+});
+
+logger.info('This is a log message');
 // Middleware
 app.use(cors()); // Use CORS middleware
 app.use(express.json()); // Middleware to parse JSON bodies
